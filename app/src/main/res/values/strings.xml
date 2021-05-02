@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Weather_Project</string>
+    <string name="menu_search">Узнать погоду</string>
+    <string name="history">История</string>
 </resources>
