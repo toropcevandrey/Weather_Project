@@ -9,14 +9,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewModel: MainViewModel
-
-    var weatherFragment = WeatherFragment()
-    var historyFragment = HistoryFragment()
+    private var weatherFragment = WeatherFragment()
+    private var historyFragment = HistoryFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
@@ -36,6 +34,5 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-
     }
 }

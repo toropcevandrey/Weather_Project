@@ -4,16 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <FrameLayout
-        xmlns:tools="http://schemas.android.com/tools"
+    <FrameLayout xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/root_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity"
-        android:id="@+id/root_container"
-        android:layout_above="@+id/bottom_navigation">
-    </FrameLayout>
-
+        android:layout_above="@+id/bottom_navigation"
+        tools:context=".MainActivity" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -24,6 +20,5 @@
         app:itemIconTint="@color/bottom_navigation_item_background_colors"
         app:itemTextColor="@color/bottom_navigation_item_background_colors"
         app:menu="@menu/menu_bottom_navigation" />
-
 
 </RelativeLayout>

@@ -7,23 +7,20 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 
-class HistoryFragment: Fragment() {
+class HistoryFragment : Fragment() {
 
-    lateinit var viewModel : HistoryFragmentViewModel
+    private lateinit var viewModel: HistoryFragmentViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.history_fragment, container, false)
-        return rootView
-
+        return inflater.inflate(R.layout.history_fragment, container, false)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel =  ViewModelProvider(this).get(HistoryFragmentViewModel::class.java)
-
+        viewModel = ViewModelProvider(this).get(HistoryFragmentViewModel::class.java)
     }
 }

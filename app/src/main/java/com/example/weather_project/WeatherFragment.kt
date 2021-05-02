@@ -7,18 +7,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 
-class WeatherFragment: Fragment() {
+class WeatherFragment : Fragment() {
 
-    lateinit var viewModel : WeatherFragmentViewModel
+    private lateinit var viewModel: WeatherFragmentViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.weather_fragment, container, false)
-        return rootView
-
+        return inflater.inflate(R.layout.weather_fragment, container, false)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
