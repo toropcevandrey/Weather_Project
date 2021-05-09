@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bottom_navigation"
-        tools:context=".MainActivity" />
+        tools:context=".ui.main.view.MainActivity" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -17,6 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:itemBackground="@drawable/menu_background_color"
+        android:background="@color/third_color"
         app:itemIconTint="@color/bottom_navigation_item_background_colors"
         app:itemTextColor="@color/bottom_navigation_item_background_colors"
         app:menu="@menu/menu_bottom_navigation" />

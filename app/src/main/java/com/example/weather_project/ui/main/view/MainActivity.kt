@@ -1,9 +1,11 @@
-package com.example.weather_project
+package com.example.weather_project.ui.main.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import com.example.weather_project.R
+import com.example.weather_project.ui.main.viewmodel.MainViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -18,18 +20,21 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-        val bottomNavigationView = findViewById<View>(R.id.bottom_navigation) as BottomNavigationView
+        supportFragmentManager.beginTransaction().add(R.id.root_container, weatherFragment).commit()
+
+        val bottomNavigationView =
+            findViewById<View>(R.id.bottom_navigation) as BottomNavigationView
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.action_search -> {
                     supportFragmentManager.beginTransaction()
-                            .replace(R.id.root_container, weatherFragment)
-                            .commitAllowingStateLoss()
+                        .replace(R.id.root_container, weatherFragment)
+                        .commitAllowingStateLoss()
                 }
                 R.id.action_history -> {
                     supportFragmentManager.beginTransaction()
-                            .replace(R.id.root_container, historyFragment)
-                            .commitAllowingStateLoss()
+                        .replace(R.id.root_container, historyFragment)
+                        .commitAllowingStateLoss()
                 }
             }
             true

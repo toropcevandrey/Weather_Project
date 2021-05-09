@@ -9,5 +9,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="colorPrimary">#FF6212</color>
     <color name="lighter_gray">#ddd</color>
-    <color name="darker_gray">#aaa</color>
+    <color name="main_color">#a1dffb</color>
+    <color name="first_color">#f9de59</color>
+    <color name="second_color">#e8a628</color>
+    <color name="third_color">#f98365</color>
+    <color name="fourth_color">#c33124</color>
 </resources>
