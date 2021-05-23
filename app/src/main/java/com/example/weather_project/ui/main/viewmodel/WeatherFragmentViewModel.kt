@@ -1,22 +1,30 @@
 package com.example.weather_project.ui.main.viewmodel
 
+
 import androidx.lifecycle.*
-import com.example.weather_project.data.api.ApiHelper
 import com.example.weather_project.data.model.WeatherApiResponse
+import com.example.weather_project.data.repository.MainRepository
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 
 class WeatherFragmentViewModel(
-    private val apiHelper: ApiHelper
+    private val mainRepository: MainRepository
 ) : ViewModel() {
-
     val myResponse: MutableLiveData<WeatherApiResponse> = MutableLiveData()
+    val status: MutableLiveData<Boolean?> = MutableLiveData()
 
     fun onButtonClicked(city: String) {
-        viewModelScope.launch() {
-            val response = apiHelper.getWeather(city)
-            myResponse.value = response
-        }
+        status.value = null
+            viewModelScope.launch() {
+                try {
+                    val response = mainRepository.getWeather(city)
+                    myResponse.value = response
+                    status.value = false
+                }catch (e:Exception) {
+                    status.value = true
+                }
+            }
     }
 }
 
