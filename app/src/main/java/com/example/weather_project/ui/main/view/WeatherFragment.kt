@@ -18,17 +18,17 @@ class WeatherFragment : Fragment() {
     @Inject
     lateinit var factory: ViewModelProvider.Factory
     private lateinit var viewModel: WeatherFragmentViewModel
-    private lateinit var cityName: TextView
+    private lateinit var tvCityName: TextView
     private lateinit var btnSearch: Button
-    private lateinit var etSearch: EditText
+    private lateinit var tietSearch: EditText
     private lateinit var tvTemp: TextView
-    private lateinit var hum: TextView
-    private lateinit var wind: TextView
-    private lateinit var info: TextView
-    private lateinit var maxTemp: TextView
-    private lateinit var minTemp: TextView
-    private lateinit var pgBar: ProgressBar
-    private lateinit var cLayout: ConstraintLayout
+    private lateinit var tvHum: TextView
+    private lateinit var tvWindSpeed: TextView
+    private lateinit var tvWeatherInfo: TextView
+    private lateinit var tvTempMax: TextView
+    private lateinit var tvTempMin: TextView
+    private lateinit var pbLoading: ProgressBar
+    private lateinit var clWeatherContainer: ConstraintLayout
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,17 +36,17 @@ class WeatherFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view: View = inflater.inflate(R.layout.weather_fragment, container, false)
-        cityName = view.findViewById(R.id.cityName)
-        btnSearch = view.findViewById(R.id.btnSearch)
-        etSearch = view.findViewById(R.id.etSearch)
-        tvTemp = view.findViewById(R.id.tvTemp)
-        pgBar = view.findViewById(R.id.pgBar)
-        cLayout = view.findViewById(R.id.clayout)
-        hum = view.findViewById(R.id.hum)
-        wind = view.findViewById(R.id.windSpeed)
-        info = view.findViewById(R.id.wInfo)
-        maxTemp = view.findViewById(R.id.tempMax)
-        minTemp = view.findViewById(R.id.tempMin)
+        tvCityName = view.findViewById(R.id.tv_city_name)
+        btnSearch = view.findViewById(R.id.btn_search)
+        tietSearch = view.findViewById(R.id.tiet_search)
+        tvTemp = view.findViewById(R.id.tv_temp)
+        pbLoading = view.findViewById(R.id.pb_loading)
+        clWeatherContainer = view.findViewById(R.id.cl_weather_container)
+        tvHum = view.findViewById(R.id.tv_hum)
+        tvWindSpeed = view.findViewById(R.id.tv_wind_speed)
+        tvWeatherInfo = view.findViewById(R.id.tv_weather_info)
+        tvTempMax = view.findViewById(R.id.tv_temp_max)
+        tvTempMin = view.findViewById(R.id.tv_temp_min)
         App.getComponent().inject(this)
         btnSearch.setOnClickListener {
             onButtonClick()
@@ -57,53 +57,50 @@ class WeatherFragment : Fragment() {
     }
 
     private fun setupWeatherViewModel() {
-        viewModel = ViewModelProvider(
-            this, factory
-        )
-            .get(WeatherFragmentViewModel::class.java)
+        viewModel = ViewModelProvider(this, factory).get(WeatherFragmentViewModel::class.java)
     }
 
     private fun onButtonClick() {
-        viewModel.onButtonClicked(etSearch.text.toString())
-        etSearch.setText("")
+        viewModel.onButtonClicked(tietSearch.text.toString())
+        tietSearch.setText("")
     }
 
     private fun setObservers() {
         viewModel.myResponse.observe(viewLifecycleOwner, Observer { response ->
-            cityName.text = response.name
+            tvCityName.text = response.name
             tvTemp.text = (response.main.temp.toInt().toString() + "°C")
-            hum.text = (response.main.humidity.toString() + "%")
-            wind.text = (response.wind.speed.toString() + "м/с")
-            info.text = response.weather[0].description
-            maxTemp.text = (response.main.temp_max.toInt().toString() + "°")
-            minTemp.text = (response.main.temp_min.toInt().toString() + "°")
+            tvHum.text = (response.main.humidity.toString() + "%")
+            tvWindSpeed.text = (response.wind.speed.toString() + "м/с")
+            tvWeatherInfo.text = response.weather[0].description
+            tvTempMax.text = (response.main.tempMax.toInt().toString() + "°")
+            tvTempMin.text = (response.main.tempMin.toInt().toString() + "°")
             when (response.weather[0].icon) {
                 "01d", "01n" -> {
-                    cLayout.setBackgroundResource(R.drawable.d01)
+                    clWeatherContainer.setBackgroundResource(R.drawable.d01)
                 }
                 "02d", "02n" -> {
-                    cLayout.setBackgroundResource(R.drawable.d02)
+                    clWeatherContainer.setBackgroundResource(R.drawable.d02)
                 }
                 "03d", "03n" -> {
-                    cLayout.setBackgroundResource(R.drawable.d03)
+                    clWeatherContainer.setBackgroundResource(R.drawable.d03)
                 }
                 "04d", "04n" -> {
-                    cLayout.setBackgroundResource(R.drawable.d04)
+                    clWeatherContainer.setBackgroundResource(R.drawable.d04)
                 }
                 "09d", "09n" -> {
-                    cLayout.setBackgroundResource(R.drawable.d09)
+                    clWeatherContainer.setBackgroundResource(R.drawable.d09)
                 }
                 "10d", "10n" -> {
-                    cLayout.setBackgroundResource(R.drawable.d10)
+                    clWeatherContainer.setBackgroundResource(R.drawable.d10)
                 }
                 "11d", "11n" -> {
-                    cLayout.setBackgroundResource(R.drawable.d11)
+                    clWeatherContainer.setBackgroundResource(R.drawable.d11)
                 }
                 "12d", "12n" -> {
-                    cLayout.setBackgroundResource(R.drawable.d12)
+                    clWeatherContainer.setBackgroundResource(R.drawable.d12)
                 }
                 "50d", "50n" -> {
-                    cLayout.setBackgroundResource(R.drawable.d50)
+                    clWeatherContainer.setBackgroundResource(R.drawable.d50)
                 }
             }
         })
@@ -111,16 +108,16 @@ class WeatherFragment : Fragment() {
         viewModel.status.observe(viewLifecycleOwner, Observer { status ->
             when (status) {
                 false -> {
-                    pgBar.visibility = View.GONE
-                    cLayout.visibility = View.VISIBLE
+                    pbLoading.visibility = View.GONE
+                    clWeatherContainer.visibility = View.VISIBLE
                 }
                 null -> {
-                    pgBar.visibility = View.VISIBLE
-                    cLayout.visibility = View.GONE
+                    pbLoading.visibility = View.VISIBLE
+                    clWeatherContainer.visibility = View.GONE
                 }
                 true -> {
-                    pgBar.visibility = View.GONE
-                    cLayout.visibility = View.VISIBLE
+                    pbLoading.visibility = View.GONE
+                    clWeatherContainer.visibility = View.VISIBLE
                     Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show()
                 }
             }

@@ -10,10 +10,11 @@ class App : Application() {
         super.onCreate()
         component = DaggerAppComponent.create()
     }
-    companion object{
-        private lateinit var component:AppComponent
 
-        fun getComponent():AppComponent{
+    companion object {
+        private lateinit var component: AppComponent
+
+        fun getComponent(): AppComponent {
             return component
         }
     }

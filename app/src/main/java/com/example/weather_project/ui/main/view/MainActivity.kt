@@ -3,6 +3,7 @@ package com.example.weather_project.ui.main.view
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.weather_project.R
 import com.example.weather_project.ui.main.viewmodel.MainViewModel
@@ -17,27 +18,31 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        firstInit()
+        configureBottomNavigation()
+    }
 
-        supportFragmentManager.beginTransaction().add(R.id.root_container, weatherFragment).commit()
+    private fun changeFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fl_root_container, fragment)
+            .commitAllowingStateLoss()
+    }
 
+    private fun configureBottomNavigation() {
         val bottomNavigationView =
             findViewById<View>(R.id.bottom_navigation) as BottomNavigationView
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.action_search -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.root_container, weatherFragment)
-                        .commitAllowingStateLoss()
-                }
-                R.id.action_history -> {
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.root_container, historyFragment)
-                        .commitAllowingStateLoss()
-                }
+                R.id.action_search -> changeFragment(weatherFragment)
+                R.id.action_history -> changeFragment(historyFragment)
             }
             true
         }
+    }
+    private fun firstInit(){
+        supportFragmentManager.beginTransaction()
+            .add(R.id.fl_root_container, weatherFragment)
+            .commit()
     }
 }

@@ -1,10 +1,15 @@
 package com.example.weather_project.data.model
 
+import com.google.gson.annotations.SerializedName
+
 data class Main(
-    val feels_like: Double,
+    @SerializedName("feels_like")
+    val feelsLike: Double,
     val humidity: Int,
     val pressure: Int,
     val temp: Double,
-    val temp_max: Double,
-    val temp_min: Double
+    @SerializedName("temp_max")
+    val tempMax: Double,
+    @SerializedName("temp_min")
+    val tempMin: Double
 )

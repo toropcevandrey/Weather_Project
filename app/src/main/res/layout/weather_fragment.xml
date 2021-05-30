@@ -7,14 +7,14 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clayout"
+        android:id="@+id/cl_weather_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/lighter_gray"
         android:elevation="5dp">
 
         <TextView
-            android:id="@+id/cityName"
+            android:id="@+id/tv_city_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="100dp"
@@ -30,7 +30,7 @@
             tools:text="Ростов-на-Дону" />
 
         <TextView
-            android:id="@+id/tvTemp"
+            android:id="@+id/tv_temp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
@@ -42,11 +42,11 @@
             android:textSize="70sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cityName"
+            app:layout_constraintTop_toBottomOf="@id/tv_city_name"
             tools:text="29°" />
 
         <TextView
-            android:id="@+id/wInfo"
+            android:id="@+id/tv_weather_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -58,7 +58,7 @@
             android:textSize="20sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTemp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_temp"
             tools:text="ясно" />
 
         <TextView
@@ -70,11 +70,11 @@
             android:fontFamily="@font/arimo"
             android:text="Влажность"
             android:textColor="@color/main_color"
-            app:layout_constraintBottom_toTopOf="@+id/hum"
-            app:layout_constraintLeft_toLeftOf="@+id/hum" />
+            app:layout_constraintBottom_toTopOf="@+id/tv_hum"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_hum" />
 
         <TextView
-            android:id="@+id/hum"
+            android:id="@+id/tv_hum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
@@ -86,12 +86,12 @@
             android:textColor="@color/black"
             android:textSize="30sp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTemp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_temp"
             app:layout_goneMarginTop="2dp"
             tools:text="25°" />
 
         <TextView
-            android:id="@+id/windSpeed"
+            android:id="@+id/tv_wind_speed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
@@ -103,7 +103,7 @@
             android:textColor="@color/black"
             android:textSize="30sp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/hum"
+            app:layout_constraintTop_toBottomOf="@+id/tv_hum"
             app:layout_goneMarginTop="2dp"
             tools:text="5 м/с" />
 
@@ -116,11 +116,11 @@
             android:fontFamily="@font/arimo"
             android:text="Скорость ветра"
             android:textColor="@color/main_color"
-            app:layout_constraintBottom_toTopOf="@+id/windSpeed"
-            app:layout_constraintLeft_toLeftOf="@+id/windSpeed" />
+            app:layout_constraintBottom_toTopOf="@+id/tv_wind_speed"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_wind_speed" />
 
         <TextView
-            android:id="@+id/tempMax"
+            android:id="@+id/tv_temp_max"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="75dp"
@@ -132,7 +132,7 @@
             android:textColor="@color/black"
             android:textSize="30sp"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTemp"
+            app:layout_constraintTop_toBottomOf="@+id/tv_temp"
             tools:text="25°" />
 
         <TextView
@@ -144,11 +144,11 @@
             android:fontFamily="@font/arimo"
             android:text="t° макс"
             android:textColor="@color/main_color"
-            app:layout_constraintBottom_toTopOf="@+id/tempMax"
-            app:layout_constraintLeft_toLeftOf="@+id/tempMax" />
+            app:layout_constraintBottom_toTopOf="@+id/tv_temp_max"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_temp_max" />
 
         <TextView
-            android:id="@+id/tempMin"
+            android:id="@+id/tv_temp_min"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -160,7 +160,7 @@
             android:textColor="@color/black"
             android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tempMax"
+            app:layout_constraintTop_toBottomOf="@+id/tv_temp_max"
             tools:text="25°" />
 
         <TextView
@@ -172,11 +172,11 @@
             android:fontFamily="@font/arimo"
             android:text="t° мин"
             android:textColor="@color/main_color"
-            app:layout_constraintBottom_toTopOf="@+id/tempMin"
-            app:layout_constraintLeft_toLeftOf="@+id/tempMin" />
+            app:layout_constraintBottom_toTopOf="@+id/tv_temp_min"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_temp_max" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textField"
+            android:id="@+id/til_text_field"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="245dp"
             android:layout_height="wrap_content"
@@ -188,10 +188,10 @@
             android:backgroundTint="#60FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/windSpeed">
+            app:layout_constraintTop_toTopOf="@+id/tv_wind_speed">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etSearch"
+                android:id="@+id/tiet_search"
                 android:backgroundTint="#60FFFFFF"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -201,7 +201,7 @@
 
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnSearch"
+            android:id="@+id/btn_search"
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -213,15 +213,15 @@
             android:textColor="@color/white"
             android:translationZ="5dp"
             app:elevation="3dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textField"
+            app:layout_constraintBottom_toBottomOf="@+id/til_text_field"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textField" />
+            app:layout_constraintTop_toTopOf="@+id/til_text_field" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <ProgressBar
-        android:id="@+id/pgBar"
+        android:id="@+id/pb_loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone" />
