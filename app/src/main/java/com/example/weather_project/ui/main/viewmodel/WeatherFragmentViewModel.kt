@@ -1,14 +1,12 @@
 package com.example.weather_project.ui.main.viewmodel
 
-
 import androidx.lifecycle.*
 import com.example.weather_project.data.model.WeatherApiResponse
 import com.example.weather_project.data.repository.MainRepository
 import kotlinx.coroutines.launch
-import java.lang.Exception
+import javax.inject.Inject
 
-
-class WeatherFragmentViewModel(
+class WeatherFragmentViewModel @Inject constructor(
     private val mainRepository: MainRepository
 ) : ViewModel() {
     val myResponse: MutableLiveData<WeatherApiResponse> = MutableLiveData()
@@ -27,5 +25,4 @@ class WeatherFragmentViewModel(
             }
     }
 }
-
 

@@ -25,13 +25,11 @@ object RetrofitBuilder {
     }
 
     private fun getRetrofit(): Retrofit {
-
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-
         return retrofit
     }
 

@@ -1,7 +1,8 @@
 package com.example.weather_project.data.repository
 
-import com.example.weather_project.data.api.ApiHelper
+import com.example.weather_project.data.api.ApiService
+import javax.inject.Inject
 
-class MainRepository(private val apiHelper: ApiHelper) {
-    suspend fun getWeather(city: String) = apiHelper.getWeather(city)
+class MainRepository @Inject constructor(private val apiService: ApiService) {
+    suspend fun getWeather(city: String) = apiService.getWeather(city)
 }

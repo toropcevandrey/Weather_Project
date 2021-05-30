@@ -10,13 +10,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.weather_project.R
-import com.example.weather_project.data.api.ApiHelper
-import com.example.weather_project.data.api.RetrofitBuilder
-import com.example.weather_project.ui.base.WeatherViewModelFactory
+import com.example.weather_project.ui.App
 import com.example.weather_project.ui.main.viewmodel.WeatherFragmentViewModel
+import javax.inject.Inject
 
 class WeatherFragment : Fragment() {
-
+    @Inject
+    lateinit var factory: ViewModelProvider.Factory
     private lateinit var viewModel: WeatherFragmentViewModel
     private lateinit var cityName: TextView
     private lateinit var btnSearch: Button
@@ -47,6 +47,7 @@ class WeatherFragment : Fragment() {
         info = view.findViewById(R.id.wInfo)
         maxTemp = view.findViewById(R.id.tempMax)
         minTemp = view.findViewById(R.id.tempMin)
+        App.getComponent().inject(this)
         btnSearch.setOnClickListener {
             onButtonClick()
         }
@@ -57,9 +58,9 @@ class WeatherFragment : Fragment() {
 
     private fun setupWeatherViewModel() {
         viewModel = ViewModelProvider(
-            this,
-            WeatherViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
-        ).get(WeatherFragmentViewModel::class.java)
+            this, factory
+        )
+            .get(WeatherFragmentViewModel::class.java)
     }
 
     private fun onButtonClick() {
