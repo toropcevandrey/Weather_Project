@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_weather_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/lighter_gray"
+        android:elevation="5dp">
+
+        <TextView
+            android:id="@+id/tv_city_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:background="@drawable/bnt_corners_shape"
+            android:elevation="8dp"
+            android:fontFamily="@font/arimo"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="40sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Ростов-на-Дону" />
+
+        <TextView
+            android:id="@+id/tv_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/bnt_corners_shape"
+            android:elevation="8dp"
+            android:fontFamily="@font/arimo"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="70sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_city_name"
+            tools:text="29°" />
+
+        <TextView
+            android:id="@+id/tv_weather_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bnt_corners_shape"
+            android:elevation="8dp"
+            android:fontFamily="@font/arimo"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_temp"
+            tools:text="ясно" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:background="@drawable/bnt_corners_shape"
+            android:elevation="8dp"
+            android:fontFamily="@font/arimo"
+            android:text="Влажность"
+            android:textColor="@color/main_color"
+            app:layout_constraintBottom_toTopOf="@+id/tv_hum"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_hum" />
+
+        <TextView
+            android:id="@+id/tv_hum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="75dp"
+            android:background="@drawable/bnt_corners_shape"
+            android:elevation="8dp"
+            android:fontFamily="@font/arimo"
+            android:text="255мм"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_temp"
+            app:layout_goneMarginTop="2dp"
+            tools:text="25°" />
+
+        <TextView
+            android:id="@+id/tv_wind_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/bnt_corners_shape"
+            android:elevation="8dp"
+            android:fontFamily="@font/arimo"
+            android:text="5 м/с"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_hum"
+            app:layout_goneMarginTop="2dp"
+            tools:text="5 м/с" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:background="@drawable/bnt_corners_shape"
+            android:elevation="8dp"
+            android:fontFamily="@font/arimo"
+            android:text="Скорость ветра"
+            android:textColor="@color/main_color"
+            app:layout_constraintBottom_toTopOf="@+id/tv_wind_speed"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_wind_speed" />
+
+        <TextView
+            android:id="@+id/tv_temp_max"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="75dp"
+            android:layout_marginEnd="50dp"
+            android:background="@drawable/bnt_corners_shape"
+            android:elevation="8dp"
+            android:fontFamily="@font/arimo"
+            android:text="25°"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_temp"
+            tools:text="25°" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:background="@drawable/bnt_corners_shape"
+            android:elevation="8dp"
+            android:fontFamily="@font/arimo"
+            android:text="t° макс"
+            android:textColor="@color/main_color"
+            app:layout_constraintBottom_toTopOf="@+id/tv_temp_max"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_temp_max" />
+
+        <TextView
+            android:id="@+id/tv_temp_min"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="50dp"
+            android:background="@drawable/bnt_corners_shape"
+            android:elevation="8dp"
+            android:fontFamily="@font/arimo"
+            android:text="25°"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_temp_max"
+            tools:text="25°" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:background="@drawable/bnt_corners_shape"
+            android:elevation="8dp"
+            android:fontFamily="@font/arimo"
+            android:text="t° мин"
+            android:textColor="@color/main_color"
+            app:layout_constraintBottom_toTopOf="@+id/tv_temp_min"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_temp_max" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_text_field"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="245dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:hint="Введите город"
+            app:endIconMode="clear_text"
+            app:boxBackgroundColor="#60FFFFFF"
+            app:hintTextColor="@color/black"
+            android:backgroundTint="#60FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_wind_speed">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tiet_search"
+                android:backgroundTint="#60FFFFFF"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_search"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="25dp"
+            android:background="@drawable/rounded_btn"
+            android:elevation="8dp"
+            android:fontFamily="@font/arimo"
+            android:text="Поиск"
+            android:textColor="@color/white"
+            android:translationZ="5dp"
+            app:elevation="3dp"
+            app:layout_constraintBottom_toBottomOf="@+id/til_text_field"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/til_text_field" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <ProgressBar
+        android:id="@+id/pb_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
