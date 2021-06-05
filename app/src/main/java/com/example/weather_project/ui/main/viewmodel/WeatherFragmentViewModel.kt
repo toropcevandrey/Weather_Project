@@ -12,17 +12,30 @@ class WeatherFragmentViewModel @Inject constructor(
     val myResponse: MutableLiveData<WeatherApiResponse> = MutableLiveData()
     val status: MutableLiveData<Boolean?> = MutableLiveData()
 
+    fun onButtonClicked(lat: Double, lon: Double) {
+        status.value = null
+        viewModelScope.launch() {
+            try {
+                val response = mainRepository.getWeather(lat, lon)
+                myResponse.value = response
+                status.value = false
+            } catch (e: Exception) {
+                status.value = true
+            }
+        }
+    }
+
     fun onButtonClicked(city: String) {
         status.value = null
-            viewModelScope.launch() {
-                try {
-                    val response = mainRepository.getWeather(city)
-                    myResponse.value = response
-                    status.value = false
-                }catch (e:Exception) {
-                    status.value = true
-                }
+        viewModelScope.launch() {
+            try {
+                val response = mainRepository.getWeather(city)
+                myResponse.value = response
+                status.value = false
+            } catch (e: Exception) {
+                status.value = true
             }
+        }
     }
 }
 

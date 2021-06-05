@@ -14,10 +14,24 @@
         android:elevation="5dp">
 
         <TextView
+            android:id="@+id/tv_change_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Сменить город"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="30dp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/arimo"
+            android:elevation="8dp"
+            android:textSize="17sp"
+            android:background="@drawable/bnt_corners_shape"/>
+
+        <TextView
             android:id="@+id/tv_city_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="200dp"
             android:background="@drawable/bnt_corners_shape"
             android:elevation="8dp"
             android:fontFamily="@font/arimo"
@@ -175,47 +189,6 @@
             app:layout_constraintBottom_toTopOf="@+id/tv_temp_min"
             app:layout_constraintLeft_toLeftOf="@+id/tv_temp_max" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_text_field"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="245dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="25dp"
-            android:hint="Введите город"
-            app:endIconMode="clear_text"
-            app:boxBackgroundColor="#60FFFFFF"
-            app:hintTextColor="@color/black"
-            android:backgroundTint="#60FFFFFF"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_wind_speed">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tiet_search"
-                android:backgroundTint="#60FFFFFF"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_search"
-            style="@style/Widget.MaterialComponents.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="25dp"
-            android:background="@drawable/rounded_btn"
-            android:elevation="8dp"
-            android:fontFamily="@font/arimo"
-            android:text="Поиск"
-            android:textColor="@color/white"
-            android:translationZ="5dp"
-            app:elevation="3dp"
-            app:layout_constraintBottom_toBottomOf="@+id/til_text_field"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/til_text_field" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
