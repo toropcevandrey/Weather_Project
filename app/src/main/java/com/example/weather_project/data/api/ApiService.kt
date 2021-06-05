@@ -7,6 +7,15 @@ import retrofit2.http.Query
 interface ApiService {
     @GET("weather")
     suspend fun getWeather(
+        @Query("lat") lat: Double,
+        @Query("lon") lon: Double,
+        @Query("appid") token: String = "2dbc59f0d4d33a3b6ad08dd4e19d654a",
+        @Query("lang") lang: String = "ru",
+        @Query("units") units: String = "metric"
+    ): WeatherApiResponse
+
+    @GET("weather")
+    suspend fun getWeather(
         @Query("q") city: String,
         @Query("appid") token: String = "2dbc59f0d4d33a3b6ad08dd4e19d654a",
         @Query("lang") lang: String = "ru",

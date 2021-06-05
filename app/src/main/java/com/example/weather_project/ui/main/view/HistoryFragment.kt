@@ -1,6 +1,7 @@
 package com.example.weather_project.ui.main.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,14 @@ import com.example.weather_project.ui.main.viewmodel.HistoryFragmentViewModel
 class HistoryFragment : Fragment() {
 
     private lateinit var viewModel: HistoryFragmentViewModel
+
+    init{
+        Log.d("fragment","history")
+    }
+
+    companion object{
+        const val TAG = "HISTORY_FRAGMENT"
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
