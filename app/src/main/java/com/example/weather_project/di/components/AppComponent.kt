@@ -3,6 +3,7 @@ package com.example.weather_project.di.components
 import com.example.weather_project.di.modules.MainModule
 import com.example.weather_project.di.modules.NetworkModule
 import com.example.weather_project.di.modules.ViewModelModule
+import com.example.weather_project.ui.main.view.HistoryFragment
 import com.example.weather_project.ui.main.view.MainActivity
 import com.example.weather_project.ui.main.view.WeatherFragment
 import dagger.Component
@@ -13,4 +14,5 @@ import javax.inject.Singleton
 interface AppComponent {
     fun inject(fragment: WeatherFragment)
     fun inject(mainActivity: MainActivity)
+    fun inject(fragment: HistoryFragment)
 }
