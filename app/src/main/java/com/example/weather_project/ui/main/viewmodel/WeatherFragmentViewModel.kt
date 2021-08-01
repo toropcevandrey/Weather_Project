@@ -2,7 +2,7 @@ package com.example.weather_project.ui.main.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.weather_project.data.db.WeatherDB
+import com.example.weather_project.data.db.WeatherData
 import com.example.weather_project.data.model.WeatherApiResponse
 import com.example.weather_project.data.repository.MainRepository
 import kotlinx.coroutines.launch
@@ -42,7 +42,7 @@ class WeatherFragmentViewModel @Inject constructor(
                 myResponse.value = response
                 status.value = false
                 saveData(
-                    WeatherDB(
+                    WeatherData(
                         city = response.name,
                         temp = response.main.temp.toInt().toString(),
                         date = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE).toString()
@@ -54,9 +54,9 @@ class WeatherFragmentViewModel @Inject constructor(
         }
     }
 
-    private suspend fun saveData(weatherDB: WeatherDB) {
+    private suspend fun saveData(weatherData: WeatherData) {
         Log.d("mytag", "saveData()")
-        mainRepository.insert(weatherDB)
+        mainRepository.insert(weatherData)
     }
 
 }

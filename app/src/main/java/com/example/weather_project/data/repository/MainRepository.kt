@@ -3,28 +3,28 @@ package com.example.weather_project.data.repository
 import android.util.Log
 import androidx.annotation.WorkerThread
 import com.example.weather_project.data.api.ApiService
-import com.example.weather_project.data.db.WeatherDB
-import com.example.weather_project.data.db.WeatherDBDao
+import com.example.weather_project.data.db.WeatherData
+import com.example.weather_project.data.db.WeatherDataDao
 import com.example.weather_project.data.model.WeatherApiResponse
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class MainRepository @Inject constructor(
     private val apiService: ApiService,
-    private val weatherDBDao: WeatherDBDao
+    private val weatherDataDao: WeatherDataDao
 ) {
-    val allWeatherDB: Flow<List<WeatherDB>> = weatherDBDao.getAlphabetized()
+    val allWeatherData: Flow<List<WeatherData>> = weatherDataDao.getAlphabetized()
 
     @WorkerThread
-    suspend fun insert(weatherDB: WeatherDB) {
+    suspend fun insert(weatherData: WeatherData) {
         Log.d("mytag", "insert()")
-        weatherDBDao.insert(weatherDB)
+        weatherDataDao.insert(weatherData)
     }
 
     @WorkerThread
     suspend fun deleteAll() {
         Log.d("mytag", "deleteAll()")
-        weatherDBDao.deleteAll()
+        weatherDataDao.deleteAll()
     }
 
     suspend fun getWeatherByCoord(lat: Double, lon: Double): WeatherApiResponse {

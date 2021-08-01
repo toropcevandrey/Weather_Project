@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.weather_project.di.ViewModelKey
 import com.example.weather_project.ui.base.ViewModelFactory
+import com.example.weather_project.ui.main.viewmodel.HistoryFragmentViewModel
 import com.example.weather_project.ui.main.viewmodel.MainViewModel
 import com.example.weather_project.ui.main.viewmodel.WeatherFragmentViewModel
 import dagger.Binds
@@ -18,6 +19,12 @@ abstract class ViewModelModule {
     @ViewModelKey(WeatherFragmentViewModel::class)
     @Singleton
     abstract fun bindWeatherViewModel(weatherFragmentViewModel: WeatherFragmentViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(HistoryFragmentViewModel::class)
+    @Singleton
+    abstract fun bindHistoryViewModel(historyFragmentViewModel: HistoryFragmentViewModel): ViewModel
 
     @Binds
     @Singleton

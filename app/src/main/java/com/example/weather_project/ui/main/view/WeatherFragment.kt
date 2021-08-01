@@ -8,7 +8,6 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
-import android.text.format.DateUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -19,18 +18,12 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.weather_project.R
-import com.example.weather_project.data.db.WeatherDB
 import com.example.weather_project.ui.App
 import com.example.weather_project.ui.main.viewmodel.WeatherFragmentViewModel
-import com.google.android.gms.common.util.DataUtils
 import com.google.android.gms.location.*
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 class WeatherFragment : Fragment() {

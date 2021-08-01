@@ -7,13 +7,13 @@ import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface WeatherDBDao {
+interface WeatherDataDao {
 
     @Query("SELECT * FROM weather_table ORDER BY id ASC")
-    fun getAlphabetized(): Flow<List<WeatherDB>>
+    fun getAlphabetized(): Flow<List<WeatherData>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(weatherDB: WeatherDB)
+    suspend fun insert(weatherData: WeatherData)
 
     @Query("DELETE FROM weather_table")
     suspend fun deleteAll()
