@@ -96,38 +96,9 @@ class WeatherFragment : Fragment() {
             tvWeatherInfo?.text = response.weather[0].description
             tvTempMax?.text = (response.main.tempMax.toInt().toString() + "°")
             tvTempMin?.text = (response.main.tempMin.toInt().toString() + "°")
-            when (response.weather[0].icon) {
-                "01d", "01n" -> {
-                    clWeatherContainer?.setBackgroundResource(R.drawable.d01)
-                }
-                "02d", "02n" -> {
-                    clWeatherContainer?.setBackgroundResource(R.drawable.d02)
-                }
-                "03d", "03n" -> {
-                    clWeatherContainer?.setBackgroundResource(R.drawable.d03)
-                }
-                "04d", "04n" -> {
-                    clWeatherContainer?.setBackgroundResource(R.drawable.d04)
-                }
-                "09d", "09n" -> {
-                    clWeatherContainer?.setBackgroundResource(R.drawable.d09)
-                }
-                "10d", "10n" -> {
-                    clWeatherContainer?.setBackgroundResource(R.drawable.d10)
-                }
-                "11d", "11n" -> {
-                    clWeatherContainer?.setBackgroundResource(R.drawable.d11)
-                }
-                "12d", "12n" -> {
-                    clWeatherContainer?.setBackgroundResource(R.drawable.d12)
-                }
-                "50d", "50n" -> {
-                    clWeatherContainer?.setBackgroundResource(R.drawable.d50)
-                }
-            }
         })
 
-        viewModel?.status?.observe(viewLifecycleOwner, Observer { status ->
+        viewModel?.status?.observe(viewLifecycleOwner, { status ->
             when (status) {
                 false -> {
                     pbLoading?.visibility = View.GONE

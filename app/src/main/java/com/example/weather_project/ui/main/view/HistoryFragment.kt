@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weather_project.R
@@ -39,15 +40,12 @@ class HistoryFragment : Fragment() {
         val view: View = inflater.inflate(R.layout.history_fragment, container, false)
         App.getComponent().inject(this)
         rvHistory = view.findViewById(R.id.rv_history_rv)
-        context?.let { it ->
-            adapterHistory = HistoryListAdapter()
-            rvHistory.adapter = adapterHistory
-            rvHistory.layoutManager = LinearLayoutManager(it)
-            viewModel?.allWeatherData?.observe(viewLifecycleOwner) { weather ->
-                weather.let { adapterHistory.submitList(it) }
-            }
-        }
+        rvHistory.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
+        adapterHistory = HistoryListAdapter()
+        rvHistory.adapter = adapterHistory
+        rvHistory.layoutManager = LinearLayoutManager(activity)
         setupHistoryViewModel()
+        setObservers()
         fab = view.findViewById(R.id.fab_history_del)
         fab.setOnClickListener {
             viewModel?.deleteAll()
@@ -58,5 +56,12 @@ class HistoryFragment : Fragment() {
     private fun setupHistoryViewModel() {
         Log.d("mylog", "setupHistoryViewModel()")
         viewModel = ViewModelProvider(this, factory).get(HistoryFragmentViewModel::class.java)
+    }
+
+    private fun setObservers() {
+        Log.d("mylog", "setObservers()")
+        viewModel?.allWeatherData?.observe(viewLifecycleOwner) { weather ->
+            weather.let { adapterHistory.submitList(it) }
+        }
     }
 }

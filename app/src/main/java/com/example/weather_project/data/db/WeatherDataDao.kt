@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface WeatherDataDao {
 
-    @Query("SELECT * FROM weather_table ORDER BY id ASC")
+    @Query("SELECT * FROM weather_table ORDER BY id DESC")
     fun getAlphabetized(): Flow<List<WeatherData>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

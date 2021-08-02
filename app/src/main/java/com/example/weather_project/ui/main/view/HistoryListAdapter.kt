@@ -30,7 +30,7 @@ class HistoryListAdapter :
         fun bind(date: String?, city: String?, temp: String?) {
             tvHistoryDate.text = date
             tvHistoryCity.text = city
-            tvHistoryTemp.text = temp
+            tvHistoryTemp.text = temp + "°C"
         }
 
         companion object {
