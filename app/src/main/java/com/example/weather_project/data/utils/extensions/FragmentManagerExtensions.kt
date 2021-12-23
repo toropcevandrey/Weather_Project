@@ -16,3 +16,7 @@ fun FragmentManager.attach(fragment: Fragment, tag: String, containerId: Int) {
         beginTransaction().add(containerId, fragment, tag).commit()
     }
 }
+
+fun String.deleteAllSpaces(): String {
+    return replace("\\s".toRegex(), "")
+}

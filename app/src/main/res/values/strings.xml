@@ -2,4 +2,16 @@
     <string name="app_name">Weather_Project</string>
     <string name="menu_search">Узнать погоду</string>
     <string name="history">История</string>
+    <string name="temp">"%1$s°C"</string>
+    <string name="percent">"%s%%"</string>
+    <string name="wind_speed_icon">"%1$sм/с"</string>
+    <string name="therm">"°"</string>
+    <string name="error">"Error"</string>
+    <string name="city_name">Название города</string>
+    <string name="search">поиск</string>
+    <string name="wind_speed">Скорость ветра</string>
+    <string name="temp_max">t° макс</string>
+    <string name="temp_min">t° мин</string>
+    <string name="humidity">Влажность</string>
+    <string name="change_city">Сменить город</string>
 </resources>

@@ -4,11 +4,11 @@ import android.Manifest
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.LocationManager
 import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,29 +18,31 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.weather_project.R
 import com.example.weather_project.ui.App
 import com.example.weather_project.ui.main.viewmodel.WeatherFragmentViewModel
 import com.google.android.gms.location.*
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 class WeatherFragment : Fragment() {
     @Inject
     lateinit var factory: ViewModelProvider.Factory
-    private lateinit var viewModel: WeatherFragmentViewModel
-    private lateinit var tvChangeCity: TextView
-    private lateinit var tvCityName: TextView
-    private lateinit var tvTemp: TextView
-    private lateinit var tvHum: TextView
-    private lateinit var tvWindSpeed: TextView
-    private lateinit var tvWeatherInfo: TextView
-    private lateinit var tvTempMax: TextView
-    private lateinit var tvTempMin: TextView
-    private lateinit var pbLoading: ProgressBar
-    private lateinit var clWeatherContainer: ConstraintLayout
+    private var viewModel: WeatherFragmentViewModel? = null
+    private var tvChangeCity: TextView? = null
+    private var tvCityName: TextView? = null
+    private var tvTemp: TextView? = null
+    private var tvHum: TextView? = null
+    private var tvWindSpeed: TextView? = null
+    private var tvWeatherInfo: TextView? = null
+    private var tvTempMax: TextView? = null
+    private var tvTempMin: TextView? = null
+    private var tvMyGeo: TextView? = null
+    private var pbLoading: ProgressBar? = null
+    private var clWeatherContainer: ConstraintLayout? = null
     private var lon: Double = 0.0
     private var lat: Double = 0.0
     private var locationClientManager: FusedLocationProviderClient? = null
@@ -67,12 +69,16 @@ class WeatherFragment : Fragment() {
         tvWeatherInfo = view.findViewById(R.id.tv_weather_info)
         tvTempMax = view.findViewById(R.id.tv_temp_max)
         tvTempMin = view.findViewById(R.id.tv_temp_min)
+        tvMyGeo = view.findViewById(R.id.tv_my_geo)
         App.getComponent().inject(this)
         getLastLocation()
         setupWeatherViewModel()
         setObservers()
-        tvChangeCity.setOnClickListener {
+        tvChangeCity?.setOnClickListener {
             showDialog()
+        }
+        tvMyGeo?.setOnClickListener {
+            onMyCoord()
         }
 
         return view
@@ -83,63 +89,61 @@ class WeatherFragment : Fragment() {
     }
 
     private fun firstCreate() {
-        viewModel.onButtonClicked(lat, lon)
+        viewModel?.firstInit(lat, lon)
+        if (LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH"))
+                .toInt() in 6..18
+        ) {
+            clWeatherContainer?.setBackgroundResource(R.drawable.day)
+            tvChangeCity?.setTextColor(Color.BLACK)
+            tvCityName?.setTextColor(Color.BLACK)
+            tvTemp?.setTextColor(Color.BLACK)
+            tvHum?.setTextColor(Color.BLACK)
+            tvWindSpeed?.setTextColor(Color.BLACK)
+            tvWeatherInfo?.setTextColor(Color.BLACK)
+            tvTempMax?.setTextColor(Color.BLACK)
+            tvTempMin?.setTextColor(Color.BLACK)
+        } else {
+            clWeatherContainer?.setBackgroundResource(R.drawable.night)
+            tvChangeCity?.setTextColor(Color.WHITE)
+            tvCityName?.setTextColor(Color.WHITE)
+            tvTemp?.setTextColor(Color.WHITE)
+            tvHum?.setTextColor(Color.WHITE)
+            tvWindSpeed?.setTextColor(Color.WHITE)
+            tvWeatherInfo?.setTextColor(Color.WHITE)
+            tvTempMax?.setTextColor(Color.WHITE)
+            tvTempMin?.setTextColor(Color.WHITE)
+        }
+    }
+
+    private fun onMyCoord() {
+        viewModel?.onMyCoord(lat, lon)
     }
 
     private fun setObservers() {
-        viewModel.myResponse.observe(viewLifecycleOwner, Observer { response ->
-            tvCityName.text = response.name
-            tvTemp.text = (response.main.temp.toInt().toString() + "°C")
-            tvHum.text = (response.main.humidity.toString() + "%")
-            tvWindSpeed.text = (response.wind.speed.toString() + "м/с")
-            tvWeatherInfo.text = response.weather[0].description
-            tvTempMax.text = (response.main.tempMax.toInt().toString() + "°")
-            tvTempMin.text = (response.main.tempMin.toInt().toString() + "°")
-            when (response.weather[0].icon) {
-                "01d", "01n" -> {
-                    clWeatherContainer.setBackgroundResource(R.drawable.d01)
-                }
-                "02d", "02n" -> {
-                    clWeatherContainer.setBackgroundResource(R.drawable.d02)
-                }
-                "03d", "03n" -> {
-                    clWeatherContainer.setBackgroundResource(R.drawable.d03)
-                }
-                "04d", "04n" -> {
-                    clWeatherContainer.setBackgroundResource(R.drawable.d04)
-                }
-                "09d", "09n" -> {
-                    clWeatherContainer.setBackgroundResource(R.drawable.d09)
-                }
-                "10d", "10n" -> {
-                    clWeatherContainer.setBackgroundResource(R.drawable.d10)
-                }
-                "11d", "11n" -> {
-                    clWeatherContainer.setBackgroundResource(R.drawable.d11)
-                }
-                "12d", "12n" -> {
-                    clWeatherContainer.setBackgroundResource(R.drawable.d12)
-                }
-                "50d", "50n" -> {
-                    clWeatherContainer.setBackgroundResource(R.drawable.d50)
-                }
-            }
+        viewModel?.myResponse?.observe(viewLifecycleOwner, Observer { response ->
+            tvCityName?.text = response.name
+            tvTemp?.text = getString(R.string.temp, response.main.temp.toInt().toString())
+            tvHum?.text = getString(R.string.percent, response.main.humidity.toString())
+            tvWindSpeed?.text = getString(R.string.wind_speed_icon, response.wind.speed.toString())
+            tvWeatherInfo?.text = response.weather[0].description
+            tvTempMax?.text = getString(R.string.temp, response.main.tempMax.toInt().toString())
+            tvTempMin?.text = getString(R.string.temp, response.main.tempMin.toInt().toString())
         })
 
-        viewModel.status.observe(viewLifecycleOwner, Observer { status ->
+        viewModel?.status?.observe(viewLifecycleOwner, { status ->
             when (status) {
                 false -> {
-                    pbLoading.visibility = View.GONE
-                    clWeatherContainer.visibility = View.VISIBLE
+                    pbLoading?.visibility = View.GONE
+                    clWeatherContainer?.visibility = View.VISIBLE
                 }
                 null -> {
-                    pbLoading.visibility = View.VISIBLE
-                    clWeatherContainer.visibility = View.GONE
+                    pbLoading?.visibility = View.VISIBLE
+                    clWeatherContainer?.visibility = View.GONE
                 }
                 true -> {
-                    pbLoading.visibility = View.GONE
-                    clWeatherContainer.visibility = View.VISIBLE
-                    Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show()
+                    pbLoading?.visibility = View.GONE
+                    clWeatherContainer?.visibility = View.VISIBLE
+                    Toast.makeText(activity, R.string.error, Toast.LENGTH_SHORT).show()
                 }
             }
         })
@@ -280,15 +284,16 @@ class WeatherFragment : Fragment() {
         context?.let {
             dialog = Dialog(it)
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialog.setCancelable(false)
+            dialog.setCancelable(true)
             dialog.setContentView(R.layout.custom_dialog_fragment)
             val etCityName = dialog.findViewById(R.id.et_city_name) as EditText
             val btnSearch = dialog.findViewById(R.id.btn_search) as Button
             btnSearch.setOnClickListener {
-                viewModel.onButtonClicked(etCityName.text.toString())
+                viewModel?.onButtonClicked(etCityName.text.toString())
                 dialog.dismiss()
             }
             dialog.show()
+
         }
     }
 }
