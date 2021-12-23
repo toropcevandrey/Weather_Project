@@ -1,6 +1,5 @@
 package com.example.weather_project.data.repository
 
-import android.util.Log
 import androidx.annotation.WorkerThread
 import com.example.weather_project.data.api.ApiService
 import com.example.weather_project.data.db.WeatherData
@@ -17,23 +16,19 @@ class MainRepository @Inject constructor(
 
     @WorkerThread
     suspend fun insert(weatherData: WeatherData) {
-        Log.d("mytag", "insert()")
         weatherDataDao.insert(weatherData)
     }
 
     @WorkerThread
     suspend fun deleteAll() {
-        Log.d("mytag", "deleteAll()")
         weatherDataDao.deleteAll()
     }
 
     suspend fun getWeatherByCoord(lat: Double, lon: Double): WeatherApiResponse {
-        Log.d("mytag", "getWeatherByCoord()")
         return apiService.getWeather(lat, lon)
     }
 
     suspend fun getWeatherByCity(city: String): WeatherApiResponse {
-        Log.d("mytag", "getWeatherByCity()")
         return apiService.getWeather(city)
     }
 }

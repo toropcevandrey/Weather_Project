@@ -15,13 +15,15 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: MainViewModel
+    @Inject
+    lateinit var factory: ViewModelProvider.Factory
+    private var viewModel: MainViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         App.getComponent().inject(this)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
         firstInit()
         configureBottomNavigation()
     }
@@ -32,7 +34,6 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.detach(R.id.fl_root_container)
         supportFragmentManager.attach(item, tag, R.id.fl_root_container)
         supportFragmentManager.executePendingTransactions()
-
     }
 
     private fun createFragmentByTag(tag: String): Fragment =
@@ -45,7 +46,7 @@ class MainActivity : AppCompatActivity() {
     private fun configureBottomNavigation() {
         val bottomNavigationView =
             findViewById<View>(R.id.bottom_navigation) as BottomNavigationView
-        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+        bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.action_search -> changeFragment(WeatherFragment.TAG)
                 R.id.action_history -> changeFragment(HistoryFragment.TAG)
@@ -55,8 +56,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun firstInit() {
-        supportFragmentManager.beginTransaction()
-            .add(R.id.fl_root_container, WeatherFragment())
-            .commit()
+        if (supportFragmentManager.fragments.isEmpty()) {
+            supportFragmentManager.beginTransaction()
+                .add(R.id.fl_root_container, WeatherFragment())
+                .commit()
+        }
     }
 }

@@ -11,5 +11,10 @@ data class WeatherData(
     @ColumnInfo(name = "temp") val temp: String?,
     @ColumnInfo(name = "date") val date: String?
 ) {
-    constructor(city: String?, temp: String?, date: String?) : this(0, city, temp, date)
+    constructor(city: String?, temp: String?, date: String?) : this(
+        0,
+        city,
+        temp,
+        date
+    )
 }

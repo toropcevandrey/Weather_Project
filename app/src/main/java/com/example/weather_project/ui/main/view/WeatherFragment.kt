@@ -4,11 +4,11 @@ import android.Manifest
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.LocationManager
 import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +24,8 @@ import com.example.weather_project.R
 import com.example.weather_project.ui.App
 import com.example.weather_project.ui.main.viewmodel.WeatherFragmentViewModel
 import com.google.android.gms.location.*
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 class WeatherFragment : Fragment() {
@@ -38,6 +40,7 @@ class WeatherFragment : Fragment() {
     private var tvWeatherInfo: TextView? = null
     private var tvTempMax: TextView? = null
     private var tvTempMin: TextView? = null
+    private var tvMyGeo: TextView? = null
     private var pbLoading: ProgressBar? = null
     private var clWeatherContainer: ConstraintLayout? = null
     private var lon: Double = 0.0
@@ -66,6 +69,7 @@ class WeatherFragment : Fragment() {
         tvWeatherInfo = view.findViewById(R.id.tv_weather_info)
         tvTempMax = view.findViewById(R.id.tv_temp_max)
         tvTempMin = view.findViewById(R.id.tv_temp_min)
+        tvMyGeo = view.findViewById(R.id.tv_my_geo)
         App.getComponent().inject(this)
         getLastLocation()
         setupWeatherViewModel()
@@ -73,29 +77,57 @@ class WeatherFragment : Fragment() {
         tvChangeCity?.setOnClickListener {
             showDialog()
         }
+        tvMyGeo?.setOnClickListener {
+            onMyCoord()
+        }
 
         return view
     }
 
     private fun setupWeatherViewModel() {
-        Log.d("mytag", "setupWeatherViewModel()")
         viewModel = ViewModelProvider(this, factory).get(WeatherFragmentViewModel::class.java)
     }
 
     private fun firstCreate() {
-        Log.d("mytag", "firstCreate()")
         viewModel?.firstInit(lat, lon)
+        if (LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH"))
+                .toInt() in 6..18
+        ) {
+            clWeatherContainer?.setBackgroundResource(R.drawable.day)
+            tvChangeCity?.setTextColor(Color.BLACK)
+            tvCityName?.setTextColor(Color.BLACK)
+            tvTemp?.setTextColor(Color.BLACK)
+            tvHum?.setTextColor(Color.BLACK)
+            tvWindSpeed?.setTextColor(Color.BLACK)
+            tvWeatherInfo?.setTextColor(Color.BLACK)
+            tvTempMax?.setTextColor(Color.BLACK)
+            tvTempMin?.setTextColor(Color.BLACK)
+        } else {
+            clWeatherContainer?.setBackgroundResource(R.drawable.night)
+            tvChangeCity?.setTextColor(Color.WHITE)
+            tvCityName?.setTextColor(Color.WHITE)
+            tvTemp?.setTextColor(Color.WHITE)
+            tvHum?.setTextColor(Color.WHITE)
+            tvWindSpeed?.setTextColor(Color.WHITE)
+            tvWeatherInfo?.setTextColor(Color.WHITE)
+            tvTempMax?.setTextColor(Color.WHITE)
+            tvTempMin?.setTextColor(Color.WHITE)
+        }
+    }
+
+    private fun onMyCoord() {
+        viewModel?.onMyCoord(lat, lon)
     }
 
     private fun setObservers() {
         viewModel?.myResponse?.observe(viewLifecycleOwner, Observer { response ->
             tvCityName?.text = response.name
-            tvTemp?.text = (response.main.temp.toInt().toString() + "°C")
-            tvHum?.text = (response.main.humidity.toString() + "%")
-            tvWindSpeed?.text = (response.wind.speed.toString() + "м/с")
+            tvTemp?.text = getString(R.string.temp, response.main.temp.toInt().toString())
+            tvHum?.text = getString(R.string.percent, response.main.humidity.toString())
+            tvWindSpeed?.text = getString(R.string.wind_speed_icon, response.wind.speed.toString())
             tvWeatherInfo?.text = response.weather[0].description
-            tvTempMax?.text = (response.main.tempMax.toInt().toString() + "°")
-            tvTempMin?.text = (response.main.tempMin.toInt().toString() + "°")
+            tvTempMax?.text = getString(R.string.temp, response.main.tempMax.toInt().toString())
+            tvTempMin?.text = getString(R.string.temp, response.main.tempMin.toInt().toString())
         })
 
         viewModel?.status?.observe(viewLifecycleOwner, { status ->
@@ -111,7 +143,7 @@ class WeatherFragment : Fragment() {
                 true -> {
                     pbLoading?.visibility = View.GONE
                     clWeatherContainer?.visibility = View.VISIBLE
-                    Toast.makeText(activity, "Error", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, R.string.error, Toast.LENGTH_SHORT).show()
                 }
             }
         })
@@ -248,7 +280,6 @@ class WeatherFragment : Fragment() {
     }
 
     private fun showDialog() {
-        Log.d("mytag", "showDialog()")
         val dialog: Dialog
         context?.let {
             dialog = Dialog(it)

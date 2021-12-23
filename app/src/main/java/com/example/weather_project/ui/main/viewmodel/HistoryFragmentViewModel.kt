@@ -13,7 +13,9 @@ class HistoryFragmentViewModel @Inject constructor(private val mainRepository: M
     ViewModel() {
     val allWeatherData: LiveData<List<WeatherData>> = mainRepository.allWeatherData.asLiveData()
 
-    fun deleteAll() = viewModelScope.launch {
-        mainRepository.deleteAll()
+    fun deleteAll() {
+        viewModelScope.launch {
+            mainRepository.deleteAll()
+        }
     }
 }

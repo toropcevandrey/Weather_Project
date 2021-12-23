@@ -15,17 +15,47 @@ class WeatherFragmentViewModel @Inject constructor(
 ) : ViewModel() {
     val myResponse: MutableLiveData<WeatherApiResponse> = MutableLiveData()
     val status: MutableLiveData<Boolean?> = MutableLiveData()
+    private var response: WeatherApiResponse? = null
 
     fun firstInit(lat: Double, lon: Double) {
-        Log.d("mytag", "firstInit()")
-        Log.d("mytag", "lat - $lat")
-        Log.d("mytag", "long - $lon")
+        status.value = null
+        if (response == null) {
+            viewModelScope.launch() {
+                try {
+                    response = mainRepository.getWeatherByCoord(lat, lon)
+                    myResponse.value = response
+                    status.value = false
+                    saveData(
+                        WeatherData(
+                            city = response?.name,
+                            temp = response?.main?.temp?.toInt().toString(),
+                            date = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE)
+                                .toString()
+                        )
+                    )
+                } catch (e: Exception) {
+                    status.value = true
+                }
+            }
+        } else {
+            status.value = false
+        }
+    }
+
+    fun onMyCoord(lat: Double, lon: Double) {
         status.value = null
         viewModelScope.launch() {
             try {
-                val response = mainRepository.getWeatherByCoord(lat, lon)
+                response = mainRepository.getWeatherByCoord(lat, lon)
                 myResponse.value = response
                 status.value = false
+                saveData(
+                    WeatherData(
+                        city = response?.name,
+                        temp = response?.main?.temp?.toInt().toString(),
+                        date = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE).toString()
+                    )
+                )
             } catch (e: Exception) {
                 status.value = true
             }
@@ -33,18 +63,16 @@ class WeatherFragmentViewModel @Inject constructor(
     }
 
     fun onButtonClicked(city: String) {
-        Log.d("mytag", "onButtonClicked()")
-        Log.d("mytag", "city - $city")
         status.value = null
         viewModelScope.launch() {
             try {
-                val response = mainRepository.getWeatherByCity(city)
+                response = mainRepository.getWeatherByCity(city)
                 myResponse.value = response
                 status.value = false
                 saveData(
                     WeatherData(
-                        city = response.name,
-                        temp = response.main.temp.toInt().toString(),
+                        city = response?.name,
+                        temp = response?.main?.temp?.toInt().toString(),
                         date = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE).toString()
                     )
                 )
@@ -55,7 +83,6 @@ class WeatherFragmentViewModel @Inject constructor(
     }
 
     private suspend fun saveData(weatherData: WeatherData) {
-        Log.d("mytag", "saveData()")
         mainRepository.insert(weatherData)
     }
 

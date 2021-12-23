@@ -14,6 +14,8 @@ import com.example.weather_project.R
 import com.example.weather_project.ui.App
 import com.example.weather_project.ui.main.viewmodel.HistoryFragmentViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 class HistoryFragment : Fragment() {
@@ -24,10 +26,6 @@ class HistoryFragment : Fragment() {
     private lateinit var adapterHistory: HistoryListAdapter
     private lateinit var fab: FloatingActionButton
 
-    init {
-        Log.d("fragment", "history")
-    }
-
     companion object {
         const val TAG = "HISTORY_FRAGMENT"
     }
@@ -36,16 +34,22 @@ class HistoryFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view: View = inflater.inflate(R.layout.history_fragment, container, false)
+    ): View {
         App.getComponent().inject(this)
+        val view: View = inflater.inflate(R.layout.history_fragment, container, false)
+        initViews(view)
+        setupHistoryViewModel()
+        setObservers()
+        setBackground()
+        return view
+    }
+
+    private fun initViews(view: View): View {
         rvHistory = view.findViewById(R.id.rv_history_rv)
         rvHistory.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL))
         adapterHistory = HistoryListAdapter()
         rvHistory.adapter = adapterHistory
         rvHistory.layoutManager = LinearLayoutManager(activity)
-        setupHistoryViewModel()
-        setObservers()
         fab = view.findViewById(R.id.fab_history_del)
         fab.setOnClickListener {
             viewModel?.deleteAll()
@@ -54,14 +58,22 @@ class HistoryFragment : Fragment() {
     }
 
     private fun setupHistoryViewModel() {
-        Log.d("mylog", "setupHistoryViewModel()")
         viewModel = ViewModelProvider(this, factory).get(HistoryFragmentViewModel::class.java)
     }
 
     private fun setObservers() {
-        Log.d("mylog", "setObservers()")
         viewModel?.allWeatherData?.observe(viewLifecycleOwner) { weather ->
-            weather.let { adapterHistory.submitList(it) }
+            adapterHistory.submitList(weather)
+        }
+    }
+
+    private fun setBackground() {
+        if (LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH"))
+                .toInt() in 6..18
+        ) {
+            rvHistory.setBackgroundResource(R.drawable.day)
+        } else {
+            rvHistory.setBackgroundResource(R.drawable.night)
         }
     }
 }

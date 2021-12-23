@@ -24,7 +24,9 @@ class MainModule(private val context: Context) {
         Room.databaseBuilder(
             context,
             WeatherDataRoomDatabase::class.java, "weather_table"
-        ).build()
+        )
+            .fallbackToDestructiveMigration()
+            .build()
 
     @Provides
     fun provideDao(db: WeatherDataRoomDatabase) = db.weatherDataDao()
