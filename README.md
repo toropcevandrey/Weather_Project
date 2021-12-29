@@ -8,4 +8,4 @@ Hello! In this MVVM project i use :
 ![alt text](screenshots/screenshot_1.png?raw=true "Экран 1 день") 
 ![alt text](screenshots/screenshot_2.png?raw=true "Экран 1 ночь")
 ![alt text](screenshots/screenshot_3.png?raw=true "Экран 2 день")
-![alt text](screenshots/screenshot_3.png?raw=true "Экран 2 ночь")
+![alt text](screenshots/screenshot_4.png?raw=true "Экран 2 ночь")
